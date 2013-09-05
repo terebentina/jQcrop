@@ -1,6 +1,6 @@
 {
 	"name": "jQcrop",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "jQuery plugin for cropping images.",
 	"dependencies": {
 		"jquery": ">=1.7.0"
