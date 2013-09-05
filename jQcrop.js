@@ -1,20 +1,10 @@
 /* ==========================================================
- * sco.crop.js
- * http://github.com/terebentina/sco.js
+ * jQcrop
+ * https://github.com/terebentina/jQcrop
  * ==========================================================
  * Copyright 2013 Dan Caragea.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Licensed under the MIT License (MIT)
  * ========================================================== */
 
 /*jshint laxcomma:true, sub:true, browser:true, jquery:true, smarttabs:true, eqeqeq: false */
@@ -22,7 +12,7 @@
 ;(function($, undefined) {
 	"use strict";
 
-	var pluginName = 'scojs_crop';
+	var pluginName = 'jQcrop';
 
 	function Crop($image, options) {
 		var self = this;
@@ -141,7 +131,7 @@
 		}
 		,update: function() {
 			this.focal = {
-				x: Math.round((this.options.width / 2 - parseInt(this.$image.css('left'), 10)) / this.percent)
+				 x: Math.round((this.options.width / 2 - parseInt(this.$image.css('left'), 10)) / this.percent)
 				,y: Math.round((this.options.height / 2 - parseInt(this.$image.css ('top'), 10)) / this.percent)
 			};
 			this.result = {
@@ -152,7 +142,7 @@
 				,stretch: this.minPercent > 1
 			};
 
-			this.$image.trigger('crop.' + pluginName,  [this.result]);
+			this.$image.trigger('crop',  [this.result]);
 		}
 		,fill: function(value, target, container) {
 			if (value + target < container) {
