@@ -93,7 +93,7 @@
 			if ($.type(key) == 'string') {
 				if ($.type(this.options[key]) !== 'undefined') {
 					this.options[key] = value;
-					if (['width', 'height'].indexOf(key) !== false) {
+					if (['width', 'height'].indexOf(key) !== -1) {
 						resize = true;
 					}
 				}
