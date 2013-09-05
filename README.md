@@ -1,4 +1,4 @@
-# jQCrop (v 1.0.0)
+# jQCrop (v 1.0.1)
 
 Easy to use jQuery plugin for zoom & pan image cropping. This plugin is a rewrite of https://github.com/adriengibrat/jQuery-crop which itself is a rewrite of https://github.com/blackbiron/jWindowCrop :)
 
@@ -9,10 +9,10 @@ It's built in the style of [sco.js](https://github.com/terebentina/sco.js) libra
 ## Usage
 
 ```javascript
-	$('img.crop').scojs_crop({
+	$('img.crop').jQcrop({
 		 width: 600
 		,height: 300
-	}).on('crop', function(e, data) {
+	}).on('crop.jQcrop', function(e, data) {
 			console.log('coordinates: ' + data);
 			if (data.stretch) {
 				console.log('image too small!!!!');

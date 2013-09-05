@@ -142,7 +142,7 @@
 				,stretch: this.minPercent > 1
 			};
 
-			this.$image.trigger('crop',  [this.result]);
+			this.$image.trigger('crop.' + pluginName,  [this.result]);
 		}
 		,fill: function(value, target, container) {
 			if (value + target < container) {
