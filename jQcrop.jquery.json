@@ -1,0 +1,33 @@
+{
+    "name": "jQcrop",
+    "title": "jQuery image crop",
+    "description": "jQuery image cropping plugin",
+    "keywords": [
+        "image",
+        "crop",
+        "cropping"
+    ],
+    "version": "1.0.0",
+    "author": {
+        "name": "Dan Caragea",
+        "url": "https://github.com/terebentina"
+    },
+    "maintainers": [
+        {
+            "name": "Dan Caragea",
+            "url": "https://github.com/terebentina"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
+        }
+    ],
+    "bugs": "https://github.com/terebentina/jQcrop/issues",
+    "homepage": "https://github.com/terebentina/jQcrop",
+    "docs": "https://github.com/terebentina/jQcrop",
+    "dependencies": {
+        "jquery": ">=1.7"
+    }
+}
