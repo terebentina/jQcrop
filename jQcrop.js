@@ -67,6 +67,7 @@
 
 		this.$frame.on('resize.' + pluginName, function() {
 			self.$frame.width(self.options.width).height(self.options.height);
+			self.$image.trigger('load.' + pluginName);
 		}).hover(function() {
 			self.$frame.toggleClass('hover');
 		}).addClass('loading').trigger('resize.' + pluginName);
