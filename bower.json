@@ -1,0 +1,13 @@
+{
+  "name": "jQcrop",
+  "version": "1.0.3",
+  "description": "jQuery plugin for cropping images.",
+  "dependencies": {
+    "jquery": ">=1.7.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "laxcomma": true,
+  "sub": true,
+  "eqeqeq": false,
+  "node": true,
+  "browser": true,
+  "esnext": true,
+  "bitwise": true,
+  "curly": true,
+  "immed": true,
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "trailing": true,
+  "smarttabs": true,
+  "-W041": true,
+  "globals": {
+    "jquery": true,
+    "jQuery": true,
+    "yepnope": true
+  }
+
+}
