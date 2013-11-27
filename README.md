@@ -3,7 +3,7 @@
 Easy to use jQuery plugin for zoom & pan image cropping. This plugin is a rewrite of https://github.com/adriengibrat/jQuery-crop which itself is a rewrite of https://github.com/blackbiron/jWindowCrop :)
 
 The main addition to this plugin is the ability to set the options after initialization and have the plugin auto-recalculate offsets and crop sizes, along with the auto-repositioning of the image (if required).
-Besides, jQcrop has experimental touch support in the [touch branch](), based on the excellent [hammer.js](https://github.com/EightMedia/hammer.js).
+Besides, jQcrop has experimental touch support in the [touch branch](https://github.com/terebentina/jQcrop/tree/touch), based on the excellent [hammer.js](https://github.com/EightMedia/hammer.js).
 
 It's built in the style of [sco.js](https://github.com/terebentina/sco.js) library so if you're familiar with that, you should feel at home with this one too.
 
