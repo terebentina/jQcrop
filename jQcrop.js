@@ -23,27 +23,53 @@
 		this.options = $.extend({}, $.fn[pluginName].defaults, options);
 		this.$image = $image;
 
-		this.$image.wrap('<div class="cropFrame" />'); // wrap image in frame;
+		this.$image.hide().addClass('cropImage').wrap('<div class="cropFrame" />'); // wrap image in frame;
 		this.$frame = this.$image.parent();
-		this.$image.hide().addClass('cropImage').on('mousedown.' + pluginName, function(e) {
-			e.preventDefault(); //some browsers do image dragging themselves
-			$(document).on(
-				 'mousemove.' + pluginName
-				,{
-					mouse: {
-						 x: e.pageX
-						,y: e.pageY
-					}
-					,image: {
-						 x: parseInt(self.$image.css('left'), 10)
-						,y: parseInt(self.$image.css('top'), 10)
-					}
+		if (typeof $.fn.hammer == 'function') {
+			var dragData = {};
+			this.$image.hammer().on('mousedown', function(e) {
+				e.preventDefault(); // this prevents firefox's default image dragging
+				e.stopPropagation();
+			}).on("dragleft dragright dragup dragdown", function(e) {
+				if (!dragData.imgWidth) {
+					dragData.imgWidth = self.$image.width();
 				}
-				,$.proxy(self.drag, self)
-			).on('mouseup.' + pluginName, function() {
-				$(document).off('.' + pluginName);
+				if (!dragData.imgHeight) {
+					dragData.imgHeight = self.$image.height();
+				}
+				if (!dragData.imgX) {
+					dragData.imgX = parseInt(self.$image.css('left'), 10);
+				}
+				if (!dragData.imgY) {
+					dragData.imgY = parseInt(self.$image.css('top'), 10);
+				}
+				// disable browser scrolling
+				e.gesture.preventDefault();
+				e.gesture.stopPropagation();
+
+				dragData.dx = e.gesture.deltaX;
+				dragData.dy = e.gesture.deltaY;
+				self.drag.call(self, dragData);
+			}).on('release', function(e) {
+				// disable browser scrolling
+				e.gesture.preventDefault();
+				dragData = {};
+				self.update();
+			}).on('doubletap', function(e) {
+				// disable browser scrolling
+				e.gesture.preventDefault();
+				self.zoomIn.call(self);
+			}).on('pinchin pinchout', function(e) {
+				// disable browser scrolling
+				e.gesture.preventDefault();
+				if (e.type == 'pinchin') {
+					self.zoom.call(self, self.percent - e.gesture.scale / 110);
+				} else {
+					self.zoom.call(self, self.percent + (e.gesture.scale - 1) / 110);
+				}
 			});
-		}).on('load.' + pluginName, function() {
+		}
+		this.$image.on('load.' + pluginName, function() {
 			$('<img/>').on('load', function() {
 				self.width = this.width;
 				self.height = this.height;
@@ -62,15 +88,16 @@
 				self.zoom(self.minPercent);
 				self.$frame.removeClass('loading');
 				self.$image.fadeIn('fast'); //display image now that it has loaded
-			}).attr('src', self.$image.attr('src'));
+				self.update();
+			}).prop('draggable', false).attr('src', self.$image.attr('src'));
 		}).trigger('load.' + pluginName);
 
 		this.$frame.on('resize.' + pluginName, function() {
-			self.$frame.width(self.options.width).height(self.options.height);
-			self.$image.trigger('load.' + pluginName);
-		}).hover(function() {
-			self.$frame.toggleClass('hover');
-		}).addClass('loading').trigger('resize.' + pluginName);
+				self.$frame.width(self.options.width).height(self.options.height);
+				self.$image.trigger('load.' + pluginName);
+			}).hover(function() {
+				self.$frame.toggleClass('hover');
+			}).addClass('loading').trigger('resize.' + pluginName);
 
 		var controls = null;
 		if (this.options.controls !== null) {
@@ -115,20 +142,24 @@
 				 left: this.fill(- Math.round(this.focal.x * this.percent - this.options.width / 2), this.$image.width(), this.options.width)
 				,top: this.fill(- Math.round(this.focal.y * this.percent - this.options.height / 2), this.$image.height(), this.options.height)
 			});
-			this.update();
 		}
-		,zoomIn: function() {
-			return !! this.zoom(this.percent + (1 - this.minPercent) / (this.options.zoom - 1 || 1));
+		,zoomIn: function(e) {
+			this.zoom(this.percent + (1 - this.minPercent) / (this.options.zoom - 1 || 1));
+			if (e) {    // because it's called from a click event, not hammer
+				this.update();
+			}
 		}
-		,zoomOut: function() {
-			return !! this.zoom(this.percent - (1 - this.minPercent) / (this.options.zoom - 1 || 1));
+		,zoomOut: function(e) {
+			this.zoom(this.percent - (1 - this.minPercent) / (this.options.zoom - 1 || 1));
+			if (e) {    // because it's called from a click event, not hammer
+				this.update();
+			}
 		}
-		,drag: function(e) {
+		,drag: function(data) {
 			this.$image.css({
-				 left: this.fill(e.data.image.x + e.pageX - e.data.mouse.x, this.$image.width(), this.options.width)
-				,top: this.fill(e.data.image.y + e.pageY - e.data.mouse.y, this.$image.height(), this.options.height)
+				left: this.fill(data.imgX + data.dx, data.imgWidth, this.options.width)
+				,top: this.fill(data.imgY + data.dy, data.imgHeight, this.options.height)
 			});
-			this.update();
 		}
 		,update: function() {
 			this.focal = {
@@ -194,4 +225,20 @@
 		,zoom: 10
 		,controls: null	// the whole div that appears on hover or null for the default
 	};
+
+	if (typeof $.getStartEvent == 'undefined') {
+		$.fn.getStartEvent = function() {
+			return 'mousedown';
+		};
+	}
+	if (typeof $.getEndEvent == 'undefined') {
+		$.fn.getEndEvent = function() {
+			return 'mouseup';
+		};
+	}
+	if (typeof $.getMoveEvent == 'undefined') {
+		$.fn.getMoveEvent = function() {
+			return 'mousemove';
+		};
+	}
 })(jQuery);

@@ -3,7 +3,8 @@
   "version": "1.0.3",
   "description": "jQuery plugin for cropping images.",
   "dependencies": {
-    "jquery": ">=1.7.0"
+    "jquery": ">=1.7.0",
+    "hammerjs": "~1.0.5"
   },
   "ignore": [
     "**/.*",
