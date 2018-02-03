@@ -69,7 +69,7 @@ To get crop results, bind a function on the crop event or read the object's resu
 A reference to the crop object can be accessed like so:
 ```javascript
 	var crop = $('img.crop').data('jQcrop');
-	console.log(crop.results);
+	console.log(crop.result);
 ```
 You then have access to all the properties and methods used for that specific element.
 Most important is that you can alter the width/height and have the plugin auto-recalculate the crop results and auto-resize:
